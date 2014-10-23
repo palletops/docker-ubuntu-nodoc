@@ -10,8 +10,9 @@ ADD apt_nocache /etc/apt/apt.conf.d/02_nocache
 ADD remove_doc.sh /usr/local/bin/remove_doc
 
 RUN /usr/local/bin/remove_doc
-RUN DEBIAN_FRONTEND=noninteractive apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get upgrade -y --no-install-recommends
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y autoremove
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y autoclean
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y clean
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update && \
+    apt-get upgrade -y --no-install-recommends && \
+    apt-get -y autoremove && \
+    apt-get -y autoclean && \
+    apt-get -y clean
